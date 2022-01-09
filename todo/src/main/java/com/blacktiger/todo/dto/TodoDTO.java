@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -19,5 +18,13 @@ public class TodoDTO {
         this.id = entitiy.getId();
         this.title = entitiy.getTitle();
         this.done =entitiy.isDone();
+    }
+
+    public static TodoEntity toEntity(final TodoDTO dto){
+        return TodoEntity.builder()
+                .id(dto.getId())
+                .title(dto.getTitle())
+                .done(dto.isDone())
+                .build();
     }
 }
