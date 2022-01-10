@@ -15,6 +15,7 @@ const Todo: React.FC<DeletableTodoItem> = (props) => {
     id: props.id,
     title: props.title,
     checked: props.checked,
+    readOnly: true,
   });
 
   const checkboxHandler = (_: React.MouseEvent) => {
@@ -23,6 +24,7 @@ const Todo: React.FC<DeletableTodoItem> = (props) => {
         id: prevState.id,
         title: prevState.title,
         checked: !prevState.checked,
+        readOnly: prevState.readOnly,
       };
     });
   };
@@ -33,16 +35,60 @@ const Todo: React.FC<DeletableTodoItem> = (props) => {
     }
   };
 
+  const offReadOnlyMode: React.MouseEventHandler = () => {
+    console.log(`Event! ${todo.readOnly}`);
+    setTodo((prevState) => {
+      console.log(`ReadOnly? ${!prevState.readOnly}`);
+      return {
+        id: prevState.id,
+        title: prevState.title,
+        checked: prevState.checked,
+        readOnly: false,
+      };
+    });
+  };
+
+  const onReadOnlyMode: React.KeyboardEventHandler = (
+    event: React.KeyboardEvent
+  ) => {
+    if (event.key === 'Enter') {
+      console.log(`Event! ${todo.readOnly}`);
+      setTodo((prevState) => {
+        console.log(`ReadOnly? ${!prevState.readOnly}`);
+        return {
+          id: prevState.id,
+          title: prevState.title,
+          checked: prevState.checked,
+          readOnly: true,
+        };
+      });
+    }
+  };
+
+  const editEventHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTodo((prevState) => {
+      return {
+        id: prevState.id,
+        title: event.target.value,
+        checked: prevState.checked,
+        readOnly: prevState.readOnly,
+      };
+    });
+  };
+
   if (props.title && props.id) {
-    console.log('props.title:' + todo.title);
-    console.log('props.id:' + todo.id);
-    console.log('props.checked:' + todo.checked);
     return (
       <ListItem>
         <Checkbox checked={todo.checked!} onClick={checkboxHandler} />
         <ListItemText>
           <InputBase
-            inputProps={{ 'aria-label': 'naked' }}
+            inputProps={{
+              'aria-label': 'naked',
+              readOnly: todo.readOnly,
+            }}
+            onClick={offReadOnlyMode}
+            onKeyPress={onReadOnlyMode}
+            onChange={editEventHandler}
             type='text'
             id={todo.id!}
             name={todo.id!}

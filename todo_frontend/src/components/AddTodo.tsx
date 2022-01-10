@@ -15,6 +15,7 @@ const AddTodo: React.FC<FuncProps> = (props) => {
 
   const onEnterKeyEventHandler = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
+      if (input.trim().length === 0) return;
       props.onAdd({
         id: Math.random().toString(),
         title: input,
@@ -25,6 +26,7 @@ const AddTodo: React.FC<FuncProps> = (props) => {
   };
 
   const onButtonClickHandler = (event: React.FormEvent) => {
+    if (input.trim().length === 0) return;
     props.onAdd({
       id: Math.random().toString(),
       title: input,
