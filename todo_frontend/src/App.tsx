@@ -2,20 +2,13 @@ import React, { useState } from 'react';
 import { Container, List, Paper } from '@material-ui/core';
 import Todo from './components/Todo';
 import AddTodo from './components/AddTodo';
-
-interface Item {
-  id: string;
-  title: string;
-  checked: boolean;
-}
-
-const initialState: Item[] = [];
+import TodoItem from './components/interfaces/TodoItem';
 
 const App: React.FC = () => {
-  const [items, setItems] = useState(initialState);
+  const [items, setItems] = useState<TodoItem[]>([]);
 
-  const addHandler = (item: Item) => {
-    setItems((prevItem: Item[]) => {
+  const addHandler = (item: TodoItem) => {
+    setItems((prevItem: TodoItem[]) => {
       return [...prevItem, item];
     });
     console.log(items);
