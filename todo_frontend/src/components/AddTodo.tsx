@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { TextField, Paper, Button, Grid } from '@material-ui/core';
 import TodoItem from './interfaces/TodoItem';
 
