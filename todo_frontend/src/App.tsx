@@ -11,19 +11,6 @@ interface Item {
 
 const initialState: Item[] = [];
 
-// const DUMMY_ITEMS = [
-//   {
-//     id: '1',
-//     title: 'first item',
-//     checked: false,
-//   },
-//   {
-//     id: '2',
-//     title: 'second item',
-//     checked: true,
-//   },
-// ];
-
 const App: React.FC = () => {
   const [items, setItems] = useState(initialState);
 
@@ -31,8 +18,12 @@ const App: React.FC = () => {
     setItems((prevItem: Item[]) => {
       return [...prevItem, item];
     });
+    console.log(items);
   };
-  console.log(items);
+
+  const deleteHandler = (id: string) => {
+    setItems(items.filter((item) => item.id !== id));
+  };
 
   return (
     <Container maxWidth='md'>
@@ -45,6 +36,7 @@ const App: React.FC = () => {
               title={item.title}
               checked={item.checked}
               key={item.id}
+              onDelete={deleteHandler}
             />
           ))}
         </List>

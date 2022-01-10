@@ -1,12 +1,26 @@
-import { Checkbox, InputBase, ListItem, ListItemText } from '@material-ui/core';
+import {
+  Checkbox,
+  IconButton,
+  InputBase,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+} from '@material-ui/core';
+import { DeleteOutline } from '@material-ui/icons';
 import React from 'react';
-import TodoItem from './interfaces/TodoItem';
+import DeletableTodoItem from './interfaces/DeletableTodoItem';
 
-const Todo: React.FC<TodoItem> = (props) => {
-  console.log('props.title:' + props.title);
-  console.log('props.id:' + props.id);
-  console.log('props.checked:' + props.checked);
+const Todo: React.FC<DeletableTodoItem> = (props) => {
+  const deleteEventHandler = (event: React.MouseEvent) => {
+    if (event.type === 'click') {
+      props.onDelete!(props.id!);
+    }
+  };
+
   if (props.title && props.id) {
+    console.log('props.title:' + props.title);
+    console.log('props.id:' + props.id);
+    console.log('props.checked:' + props.checked);
     return (
       <ListItem>
         <Checkbox checked={props.checked!} />
@@ -21,6 +35,11 @@ const Todo: React.FC<TodoItem> = (props) => {
             fullWidth={true}
           />
         </ListItemText>
+        <ListItemSecondaryAction>
+          <IconButton aria-label='Delete Todo' onClick={deleteEventHandler}>
+            <DeleteOutline />
+          </IconButton>
+        </ListItemSecondaryAction>
       </ListItem>
     );
   }
