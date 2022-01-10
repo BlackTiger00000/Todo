@@ -1,6 +1,7 @@
 import React from 'react';
+import { Container, List, Paper } from '@material-ui/core';
 import Todo from './components/Todo';
-import { List, Paper } from '@material-ui/core';
+import AddTodo from './components/AddTodo';
 
 const DUMMY_ITEMS = [
   {
@@ -17,13 +18,16 @@ const DUMMY_ITEMS = [
 
 const App: React.FC = () => {
   return (
-    <Paper style={{ margin: 16 }}>
-      <List>
-        {DUMMY_ITEMS.map((item) => (
-          <Todo item={item} key={item.id} />
-        ))}
-      </List>
-    </Paper>
+    <Container maxWidth='md'>
+      <AddTodo />
+      <Paper style={{ margin: 16 }}>
+        <List>
+          {DUMMY_ITEMS.map((item) => (
+            <Todo item={item} key={item.id} />
+          ))}
+        </List>
+      </Paper>
+    </Container>
   );
 };
 
