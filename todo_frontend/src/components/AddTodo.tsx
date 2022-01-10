@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { TextField, Paper, Button, Grid } from '@material-ui/core';
 import TodoItem from './interfaces/TodoItem';
 
@@ -6,41 +6,31 @@ interface FuncProps {
   onAdd(item: TodoItem): void;
 }
 
-const initialState: TodoItem = {
-  id: null,
-  title: null,
-  checked: null,
-};
-
 const AddTodo: React.FC<FuncProps> = (props) => {
-  const [input, setInput] = useState(initialState);
+  const [input, setInput] = useState('');
 
-  const onInputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInput({
-      id: Math.random().toString(),
-      title: event.currentTarget.value,
-      checked: false,
-    });
+  const onInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(event.currentTarget.value);
   };
 
   const onEnterKeyEventHandler = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
-      props.onAdd(input);
-      setInput({
-        id: null,
-        title: null,
-        checked: null,
+      props.onAdd({
+        id: Math.random().toString(),
+        title: input,
+        checked: false,
       });
+      setInput('');
     }
   };
 
   const onButtonClickHandler = (event: React.FormEvent) => {
-    props.onAdd(input);
-    setInput({
-      id: null,
-      title: null,
-      checked: null,
+    props.onAdd({
+      id: Math.random().toString(),
+      title: input,
+      checked: false,
     });
+    setInput('');
   };
 
   return (
@@ -50,8 +40,9 @@ const AddTodo: React.FC<FuncProps> = (props) => {
           <TextField
             placeholder='할 일을 입력하세요'
             fullWidth
-            onChange={onInputChangeHandler}
+            onChange={onInputHandler}
             onKeyPress={onEnterKeyEventHandler}
+            value={input}
           />
         </Grid>
         <Grid xs={1} md={1} item>
