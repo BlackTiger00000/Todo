@@ -1,3 +1,4 @@
+import TodoItem from '../interfaces/TodoItem';
 import { API_BASE_URL } from './app-config';
 
 interface Option {
@@ -7,7 +8,11 @@ interface Option {
   body?: string;
 }
 
-const call: Function = async (api: string, method: string, request: string) => {
+const call = async (
+  api: string,
+  method: string,
+  request: TodoItem[] | null
+) => {
   let options = {
     headers: new Headers({ 'Content-Type': 'application/json' }),
     url: API_BASE_URL + api,

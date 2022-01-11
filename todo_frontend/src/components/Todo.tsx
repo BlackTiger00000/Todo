@@ -7,9 +7,8 @@ import {
   ListItemText,
 } from '@material-ui/core';
 import { DeleteOutline } from '@material-ui/icons';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 import DeletableTodoItem from './interfaces/DeletableTodoItem';
-import { API_BASE_URL } from './util/app-config';
 
 const Todo: React.FC<DeletableTodoItem> = (props) => {
   const [todo, setTodo] = useState({
@@ -18,23 +17,6 @@ const Todo: React.FC<DeletableTodoItem> = (props) => {
     checked: props.checked,
     readOnly: true,
   });
-
-  //////////////////////////////////
-  // 데이터 패치용함수
-  // const fetchTodosHandler = useCallback(async () => {
-  //   const response = await fetch(API_BASE_URL, {
-  //     method: 'GET',
-  //     headers: { 'Content-Type': 'application/json' },
-  //   });
-  //   if (!response.ok) {
-  //     throw new Error('fetchTodosHandler에서 에러발생');
-  //   }
-  //   const data = await response.json();
-  // }, []);
-
-  // useEffect(() => {
-  //   fetchTodosHandler();
-  // }, [fetchTodosHandler]);
 
   const checkboxHandler = (_: React.MouseEvent) => {
     setTodo((prevState) => {
