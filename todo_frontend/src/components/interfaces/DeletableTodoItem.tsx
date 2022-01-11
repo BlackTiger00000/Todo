@@ -1,6 +1,5 @@
-export default interface DeletableTodoItem {
-  id: string | null;
-  title: string | null;
-  checked: boolean | null;
+import TodoItem from './TodoItem';
+
+export default interface DeletableTodoItem extends TodoItem {
   onDelete(id: string): void;
 }
