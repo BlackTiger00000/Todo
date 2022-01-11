@@ -23,7 +23,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     fetchTodosHandler();
-  }, [fetchTodosHandler, items]);
+  }, [fetchTodosHandler]);
 
   const addHandler = (item: TodoItem) => {
     fetch(API_BASE_URL + '/todo', {
