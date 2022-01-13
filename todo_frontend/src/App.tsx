@@ -3,52 +3,30 @@ import { Container, List, Paper } from '@material-ui/core';
 import Todo from './components/Todo';
 import AddTodo from './components/AddTodo';
 import TodoItem from './components/interfaces/TodoItem';
-import { API_BASE_URL } from './components/util/app-config';
+import fetchItem from './components/util/fetchItem';
 
 const App: React.FC = () => {
   const [items, setItems] = useState<TodoItem[]>([]);
   ////////////////////////////////
   //데이터 패치용함수
   const fetchTodosHandler = useCallback(async () => {
-    const response = await fetch(API_BASE_URL + '/todo', {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    });
-    if (!response.ok) {
-      throw new Error('fetchTodosHandler에서 에러발생');
-    }
-    const data = await response.json();
-    setItems(data.data);
+    const itemArr = await fetchItem('GET');
+    setItems(itemArr);
   }, []);
 
   useEffect(() => {
     fetchTodosHandler();
   }, [fetchTodosHandler]);
 
-  const addHandler = (item: TodoItem) => {
-    fetch(API_BASE_URL + '/todo', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(item),
-    })
-      .then((response) => response.json())
-      .then((response) => setItems(response.data));
+  const addHandler = async (item: TodoItem) => {
+    const itemArr = await fetchItem('POST', item);
+    setItems(itemArr);
   };
 
-  const deleteHandler = (id: string) => {
+  const deleteHandler = async (id: string) => {
     const item = items.find((item) => item.id === id);
-    fetch(API_BASE_URL + '/todo', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(item),
-    })
-      .then((response) => response.json())
-      .then((response) => setItems(response.data));
-    // setItems(items.filter((item) => item.id !== id));
+    const itemArr = await fetchItem('DELETE', item!);
+    setItems(itemArr);
   };
 
   return (
